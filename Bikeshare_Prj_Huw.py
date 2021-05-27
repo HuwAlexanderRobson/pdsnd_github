@@ -34,7 +34,7 @@ def load_data2(city,month,day):
     # load the data for the relevant cities
 
     # filter by city where necessary
-    if city!="all":
+    if city!=["all"]:
         
         # check if New York is in the list of cities provided to resolve the "_" character issue
         
@@ -56,7 +56,7 @@ def load_data2(city,month,day):
 
         # now read the csv file from the dir for the cities in the selected dict
         for c in city:
-            filepath = c +".csv"
+            filepath = "input_data-files/"+c+".csv"
             cities_list.append(pd.read_csv(filepath))
         
         #make a single df from the list of dfs with concat function.
@@ -88,7 +88,7 @@ def load_data2(city,month,day):
 
     # month filter
 
-    if month!="all":
+    if month!=["all"]:
 
         # if supplied one month convert to a list
         
@@ -119,7 +119,7 @@ def load_data2(city,month,day):
 
     # day filter
 
-    if day !="all":
+    if day !=["all"]:
 
         if type(day) is not list:
             day = [day]
@@ -231,7 +231,7 @@ def user_input(i):
             m = input("Which cities are you interested in? : ")
             m=[s.strip().lower() for s in m.split(",")]
             # verify correct data type entered
-            if not all([e in ["chicago","washington", "new york city"] for e in m]):
+            if not all([e in ["chicago","washington", "new york city"] for e in m]) or m[0] !="all":
                 print("Those cities aren't valid unfortunately. Pls try again.")
             else:
                 break
@@ -244,7 +244,7 @@ def user_input(i):
             #Finally,  captialise the strings in m so that first character is a capital
             m=[s.strip().lower().capitalize() for s in m.split(",")]
             # verify correct data type entered
-            if not all([e in ['January','February','March','April','May','June','July','August','September','October','November','December'] for e in m]):
+            if not all([e in ['January','February','March','April','May','June','July','August','September','October','November','December'] for e in m]) or m[0]!="all":
                 print("Those months aren't valid unfortunately. Pls try again.")   
             else: 
                 break                              
@@ -257,7 +257,7 @@ def user_input(i):
             # Finally, captialise the strings in m so that first character is a capital
             m=[s.strip().lower().capitalize() for s in m.split(",")]
             # verify correct data type entered
-            if not all([e in ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'] for e in m]):
+            if not all([e in ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'] for e in m]) or m[0]!="all":
                 print("Those days aren't valid unfortunately. Pls try again.")   
             else: 
                  break
