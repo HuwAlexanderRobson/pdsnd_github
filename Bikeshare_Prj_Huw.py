@@ -1,4 +1,4 @@
-import allpandas as pd
+import pandas as pd
 import os
 
 #set the folder containingall my files as the active directory
@@ -56,7 +56,7 @@ def load_data2(city,month,day):
 
         # now read the csv file from the dir for the cities in the selected dict
         for c in city:
-            filepath = "input_data_files/"+c+".csv"
+            filepath = c+".csv"
             cities_list.append(pd.read_csv(filepath))
         
         #make a single df from the list of dfs with concat function.
@@ -74,16 +74,22 @@ def load_data2(city,month,day):
     else:
 
         #loop through all of the .csv files in "input_data_files"
-        filepath = "input_data_files/"
-        file_list = os.listdir(filepath)
+        file_list = os.listdir()
+
+        csv_files = []
+
+        for f in file_list:
+           if "csv" in f:
+                csv_files.append(f)
+
         cities_list =[]
 
         # now read the csv file from the dir for all of the cities for which there are data files
-        for f in file_list:
-            cities_list.append(pd.read_csv("input_data_files/"+f))
+        for f in csv_files:
+            cities_list.append(pd.read_csv(f))
 
         # extract a list of all of the city names in the input data
-        city = [f.split(".")[0].capitalize() for f in file_list]
+        city = [f.split(".")[0].capitalize() for f in csv_files]
  
         #make a single df from the list of dfs with concat function.
         # axis = 0 says that concatenate over rows (vertically)
