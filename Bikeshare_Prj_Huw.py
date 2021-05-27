@@ -22,11 +22,11 @@ def load_data2(city,month,day):
     Loads data for the specChicified city and filters by month and day if applicable.
 
     Anrgs:
-        (str) city - name of the city to analyze. String for an individual city, a list if you want multiple cities or all to apply no filters
-        (str) month - name of the month to filter by, or a list of months, or "all" to apply no month filter
-        (str) day - name of the day of week to filter by, or a list of days, or "all" to apply no day filter
+        (str) city - name of the city to analyze. String for an individual city, a list if you want multiple cities or "all" to see all cities in the dataset.
+        (str) month - name of the month to filter by, or a list of months, or "all" to see statistics for all months values in the data set.
+        (str) day - name of the day of week to filter by, or a list of days, or "all" to see statistics for all day values in the data set. 
     Returns:
-        df - Pandas DataFrame containing city data filtered by month and day
+        df - Pandas DataFrame containing data filtered by month, day and city.
         
     """
     
