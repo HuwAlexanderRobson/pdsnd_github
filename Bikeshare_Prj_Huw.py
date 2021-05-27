@@ -56,7 +56,7 @@ def load_data2(city,month,day):
 
         # now read the csv file from the dir for the cities in the selected dict
         for c in city:
-            filepath = c +".csv"
+            filepath = "input_data-files/"+c+".csv"
             cities_list.append(pd.read_csv(filepath))
         
         #make a single df from the list of dfs with concat function.
