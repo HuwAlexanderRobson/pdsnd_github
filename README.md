@@ -37,5 +37,9 @@ Git repo directory containing commits for project branches and all other related
 Directory containing workflows for your git project: .github
 
 ### Credits
-It's important to give proper credit. Add links to any repo that inspired you or blogposts you consulted.
+
+Kaggle post that helped me understand the definition of the variables in the data set and the purpose of the bikeshare study: Singdha Swain, 2018. V3. Retrieved 20/04/21. 
+https://www.kaggle.com/snig12swain/bike-share-system-analysis, https://www.kaggle.com/deepak525/us-bike-share-analysis
+
+
 
