@@ -1,7 +1,7 @@
-import pandas as pd
+import allpandas as pd
 import os
 
-#set the folder containing my files as the active directory
+#set the folder containingall my files as the active directory
 #os.chdir(r"C:\Users\huwro\Udacity_Projects\Udacity Pgm for DS Proj 2\bikeshare-2")
 # fishy
 
@@ -56,7 +56,7 @@ def load_data2(city,month,day):
 
         # now read the csv file from the dir for the cities in the selected dict
         for c in city:
-            filepath = "input_data-files/"+c+".csv"
+            filepath = "input_data_files/"+c+".csv"
             cities_list.append(pd.read_csv(filepath))
         
         #make a single df from the list of dfs with concat function.
@@ -70,10 +70,34 @@ def load_data2(city,month,day):
         
         # delete the index of the previous df and "Unamed: 0", which are unecessary
         df.drop(columns=["key_0","Unnamed: 0"],inplace=True)
-
+    
     else:
 
-        df=pd.read_csv(cities_dict)
+        #loop through all of the .csv files in "input_data_files"
+        filepath = "input_data_files/"
+        file_list = os.listdir(filepath)
+        cities_list =[]
+
+        # now read the csv file from the dir for all of the cities for which there are data files
+        for f in file_list:
+            cities_list.append(pd.read_csv("input_data_files/"+f))
+
+        # extract a list of all of the city names in the input data
+        city = [f.split(".")[0].capitalize() for f in file_list]
+ 
+        #make a single df from the list of dfs with concat function.
+        # axis = 0 says that concatenate over rows (vertically)
+        df=pd.concat(cities_list, axis= 0, ignore_index=False, keys=city, names=['cities','row index'], sort=True)
+
+        #create a catagorical variable in the series with the city values against the lines
+        df2 = pd.Series(df.index.get_level_values(0))
+        
+        df=pd.merge(df,df2, how='inner', on=df.index, sort=True)
+
+        # delete the index of the previous df and "Unamed: 0", which are unecessary
+        df.drop(columns=["key_0","Unnamed: 0"],inplace=True)
+ 
+
   
     #convert 'Start Time' from object/str dtype to data time
     df['Start Time']=pd.to_datetime(df['Start Time'])
@@ -88,7 +112,7 @@ def load_data2(city,month,day):
 
     # month filter
 
-    if month!=["all"]:
+    if month!=["All"]:
 
         # if supplied one month convert to a list
         
@@ -116,16 +140,30 @@ def load_data2(city,month,day):
         #do the mapping
         df['Month']=df['Month'].map(mnth_mapping_dict)
 
+    else:
+        # get a list of mnth names to convert to integers
+        month_names=pd.Series(['January','February','March','April','May','June','July','August','September','October','November','December'])
+
+        # now convert the output df's month values to the month names
+        
+        # first make the dict to go into mapping function
+        zip_iterator = zip([i for i in range(1,13)],month_names) #get a list of tuples
+        mnth_mapping_dict = dict(zip_iterator)
+
+        #do the mapping
+        df['Month']=df['Month'].map(mnth_mapping_dict)
+
 
     # day filter
 
-    if day !=["all"]:
+    if day !=["All"]:
 
         if type(day) is not list:
             day = [day]
 
         df=df.loc[df['Day'].isin(day)]
-        
+
+
     #finally make a column of combinations of start and end stations
     df['Trip']=pd.Series(zip(df['Start Station'],df['End Station'])).apply(lambda x: "From "+ x[0]+ " to "+x[1])
 
@@ -166,6 +204,7 @@ def calc_stats(df):
     
     #1 Popular times of travel 
     # note .droplevel() is used to remove the unecessary hierarchical index
+
     travel_time_stats=df.groupby(by=df['City'],as_index=True)[['Month','Day']].apply(pd.DataFrame.mode).droplevel(level=1)
 
     #2 Popular stations and trip
@@ -231,7 +270,7 @@ def user_input(i):
             m = input("Which cities are you interested in? : ")
             m=[s.strip().lower() for s in m.split(",")]
             # verify correct data type entered
-            if not all([e in ["chicago","washington", "new york city"] for e in m]) or m[0] !="all":
+            if not all([e in ["chicago","washington", "new york city"] for e in m]) and m[0]!="all":
                 print("Those cities aren't valid unfortunately. Pls try again.")
             else:
                 break
@@ -244,7 +283,7 @@ def user_input(i):
             #Finally,  captialise the strings in m so that first character is a capital
             m=[s.strip().lower().capitalize() for s in m.split(",")]
             # verify correct data type entered
-            if not all([e in ['January','February','March','April','May','June','July','August','September','October','November','December'] for e in m]) or m[0]!="all":
+            if not all([e in ['January','February','March','April','May','June','July','August','September','October','November','December'] for e in m]) and m[0]!="All":
                 print("Those months aren't valid unfortunately. Pls try again.")   
             else: 
                 break                              
@@ -257,7 +296,7 @@ def user_input(i):
             # Finally, captialise the strings in m so that first character is a capital
             m=[s.strip().lower().capitalize() for s in m.split(",")]
             # verify correct data type entered
-            if not all([e in ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'] for e in m]) or m[0]!="all":
+            if not all([e in ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'] for e in m]) and m[0]!="All":
                 print("Those days aren't valid unfortunately. Pls try again.")   
             else: 
                  break
