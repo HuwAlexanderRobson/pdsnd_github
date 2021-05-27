@@ -1,16 +1,41 @@
 >**Note**: Please **fork** the current Udacity repository so that you will have a **remote** repository in **your** Github account. Clone the remote repository to your local machine. Later, as a part of the project "Post your Work on Github", you will push your proposed changes to the remote repository in your Github account.
 
 ### Date created
-Include the date you created this project and README file.
+
+26/05/2021
 
 ### Project Title
-Replace the Project Title
+
+Assess Demand Profile for US Bikeshare Rollouts
 
 ### Description
-Describe what your project is about and what it does
 
-### Files used
-Include the files used
+The project produced an application that provides a set of descriptive statistics for a subset of the population of US bikeshare trial usage that the user can define over cities and periods of time. 
+This provides exploratory analysis into the characteristics of the users of the bikes and the characteristics of how the bikes were used. It does this by providing a split values for the statistics over the values of a number of dimensions.
+Firstly over each of the three cities included in the trial: Washington DC, New York and Chicago. Secondly over key user characterstics: gender and user type (subscriber - registered user vs customer - a one-time user). 
+This can provide answers to key business questions which will inform decisions about how to deploy bikeshare solutions to maximise profit and user experience.
+
+Specifically statistics are provided over the following catagories:
+1. Travel Time Stats: when were the bikes used.
+2. Travel Location Stats: where were they taken from and what was their destination for each use of a bike. 
+3. Travel Duration Stats: how long was each use of a bike.
+4. User Characteristic Stats: how many users were subscribers
+5. User Birth Stats
+
+### The project contains the following files
+
+python file containing the script that produces the stats: Bikeshare_Prj_Huw.py.
+
+Source data files: 
+input_data_files/chicago.csv
+input_data_files/new_york_city.csv
+input_data_files/washington.csv
+
+List files to ignore in commits:
+.gitignore
+
+.git
+.github
 
 ### Credits
 It's important to give proper credit. Add links to any repo that inspired you or blogposts you consulted.
